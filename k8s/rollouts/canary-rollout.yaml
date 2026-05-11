@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: fraud-rollout
+  namespace: fraud-detection
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: fraud-scoring
+  template:
+    metadata:
+      labels:
+        app: fraud-scoring
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: fraud-api
+          image: fraud-scoring:v1
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL_VERSION
+              value: v1
+  strategy:
+    canary:
+      stableService: fraud-stable
+      canaryService: fraud-canary
+      steps:
+        # TODO chapitre 4 : compléter les étapes 10 -> 25 -> 50 -> 100.
+        - setWeight: 10
+        - pause: {}

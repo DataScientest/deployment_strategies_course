@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: fraud-bluegreen
+  namespace: fraud-detection
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fraud-scoring
+  template:
+    metadata:
+      labels:
+        app: fraud-scoring
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: fraud-api
+          image: fraud-scoring:v1
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL_VERSION
+              value: v1
+  strategy:
+    blueGreen:
+      # TODO chapitre 5 : compléter activeService et previewService.
+      autoPromotionEnabled: false

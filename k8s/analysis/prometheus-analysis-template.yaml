@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: fraud-latency-and-errors
+  namespace: fraud-detection
+spec:
+  metrics:
+    - name: error-rate
+      interval: 30s
+      count: 3
+      failureLimit: 1
+      successCondition: result[0] < 0.05
+      failureCondition: result[0] >= 0.05
+      provider:
+        prometheus:
+          address: http://prometheus-server.monitoring.svc.cluster.local
+          query: |
+            sum(rate(fraud_prediction_errors_total{model_version="v2-buggy"}[1m])) or vector(0)
+    - name: p95-latency
+      interval: 30s
+      count: 3
+      failureLimit: 1
+      successCondition: result[0] < 0.8
+      failureCondition: result[0] >= 0.8
+      provider:
+        prometheus:
+          address: http://prometheus.monitoring.svc.cluster.local:9090
+          # TODO chapitre 6 : compléter la requête Prometheus.
+          query: |
+            up
+          # TODO chapitre 6 : compléter successCondition et failureCondition.
