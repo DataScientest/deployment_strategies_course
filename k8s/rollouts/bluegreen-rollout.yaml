@@ -27,5 +27,5 @@ spec:
               value: v1
   strategy:
     blueGreen:
-      # TODO chapitre 5 : compléter activeService et previewService.
+      # TODO chapitre 4 : compléter activeService et previewService.
       autoPromotionEnabled: false

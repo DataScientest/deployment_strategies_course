@@ -25,7 +25,7 @@ spec:
       provider:
         prometheus:
           address: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
-          # TODO chapitre 6 : compléter la requête Prometheus.
+          # TODO chapitre 5 : compléter la requête Prometheus.
           query: |
             up
-          # TODO chapitre 6 : compléter successCondition et failureCondition.
+          # TODO chapitre 5 : compléter successCondition et failureCondition.

@@ -4,7 +4,7 @@ metadata:
   name: fraud-shadow
   namespace: fraud-detection
   annotations:
-    # TODO chapitre 3 : ajouter les annotations de mirroring vers le service challenger.
+    # TODO chapitre 2 : ajouter les annotations de mirroring vers le service challenger.
 spec:
   ingressClassName: nginx
   rules:

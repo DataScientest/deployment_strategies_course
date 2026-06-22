@@ -63,7 +63,7 @@ def score_request(payload: FraudRequest) -> float:
     if payload.hour_of_day < 6:
         score += 0.10
 
-    # TODO chapitre 2 : différencier plus clairement v1, v2 et v2-buggy.
+    #TODO chapitre 2 : différencier plus clairement v1, v2 et v2-buggy.
     if MODEL_VERSION == "v2":
         score += 0.05
     if MODEL_VERSION == "v2-buggy":
