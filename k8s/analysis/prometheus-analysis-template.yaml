@@ -13,7 +13,7 @@ spec:
       failureCondition: result[0] >= 0.05
       provider:
         prometheus:
-          address: http://prometheus-server.monitoring.svc.cluster.local
+          address: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
           query: |
             sum(rate(fraud_prediction_errors_total{model_version="v2-buggy"}[1m])) or vector(0)
     - name: p95-latency
@@ -24,7 +24,7 @@ spec:
       failureCondition: result[0] >= 0.8
       provider:
         prometheus:
-          address: http://prometheus.monitoring.svc.cluster.local:9090
+          address: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
           # TODO chapitre 6 : compléter la requête Prometheus.
           query: |
             up
