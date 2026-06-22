@@ -8,6 +8,7 @@ metadata:
 spec:
   selector:
     app: fraud-scoring
+    track: canary
   ports:
     - name: http
       port: 80
